@@ -68,3 +68,5 @@ def result_evaluation():
         outfile.write(delimiter_newline)
         outfile.write(str(classification_report(np.asarray(labels_test), labels_predict)))
         outfile.write(delimiter_newline)
+
+#  result_evaluation()
