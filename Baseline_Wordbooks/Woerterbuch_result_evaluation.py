@@ -27,7 +27,7 @@ def result_evaluation():
         for row in tsv_reader:
             count_rows += 1
             for r in row:
-                dialect, text_to_translate, woerterbuch_result, match = r.split(delimiter_tab)
+                splitlabel, dialect, text_to_translate, woerterbuch_result, match = r.split(delimiter_tab)
                 if match == "True":
                     true_count += 1
                 if match == "False":
