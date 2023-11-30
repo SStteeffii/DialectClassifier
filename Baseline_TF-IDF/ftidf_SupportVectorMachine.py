@@ -14,8 +14,8 @@ from sklearn.metrics import confusion_matrix, classification_report
 if __name__ == '__main__':
 
     files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
-             '../DataTraining/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
-             '../DataTraining/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
+             '../Data_Training/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
+             '../Data_Training/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
 
     for file in files:
 
@@ -62,6 +62,8 @@ if __name__ == '__main__':
         # predict test data
         y_pred = classifier.predict(X_test_tf)
         print(classification_report(np.asarray(labels_test), y_pred))
+        with open('./Result_SupportVectorMachine/classification_report_SVM_' + file[17:file.find("_", 18)] + '.tsv', 'a', encoding='utf-16') as outfile:
+            outfile.write(str(classification_report(np.asarray(labels_test), y_pred)))
 
         # Plot confusion matrix in a beautiful manner
         ax = plt.subplot()

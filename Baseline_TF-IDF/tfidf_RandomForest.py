@@ -14,8 +14,8 @@ from sklearn.metrics import confusion_matrix, classification_report
 if __name__ == '__main__':
 
     files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
-             '../DataTraining/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
-             '../DataTraining/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
+             '../Data_Training/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
+             '../Data_Training/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
 
     for file in files:
 
@@ -61,6 +61,8 @@ if __name__ == '__main__':
         # predict test data
         y_pred = classifier.predict(X_test_tf)
         print(classification_report(np.asarray(labels_test), y_pred))
+        with open('./Result_RandomForest/classification_report_RF_' + file[17:file.find("_", 18)] + '.tsv', 'a', encoding='utf-16') as outfile:
+            outfile.write(str(classification_report(np.asarray(labels_test), y_pred)))
 
         # Plot confusion matrix in a beautiful manner
         ax = plt.subplot()
@@ -68,7 +70,7 @@ if __name__ == '__main__':
 
         cnf_matrix = confusion_matrix(labels_test, y_pred)
         df = pd.DataFrame(cnf_matrix, index=index, columns=index)
-        sns.heatmap(df, annot=True, cmap='Blues', ax=ax) # fmt='g'
+        sns.heatmap(df, annot=True, cmap='Blues', ax=ax)
 
         # labels, title and ticks
         ax.set_xlabel('Predicted', fontsize=15)
@@ -76,6 +78,6 @@ if __name__ == '__main__':
         plt.title('Refined Confusion Matrix - TF-IDF, Random Forest', fontsize=18)
         plt.suptitle('Data: ' + file[17:file.find("_", 18)])
 
-        plt.savefig('./Result_SupportVectorMachine/ConMat-TFIDF-RF-' + file[17:file.find("_", 18)] + '.png')
+        plt.savefig('./Result_RandomForest/ConMat-TFIDF-RF-' + file[17:file.find("_", 18)] + '.png')
 
 
