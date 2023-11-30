@@ -13,9 +13,9 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 if __name__ == '__main__':
 
-    files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed.tsv',
-             '../DataTraining/MrDialect_de+nds+bar_mixed_preprocessed.tsv',
-             '../DataTraining/Wikipedia_de+nds+bar_mixed.tsv']
+    files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
+             '../DataTraining/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
+             '../DataTraining/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
 
     for file in files:
 
@@ -27,7 +27,7 @@ if __name__ == '__main__':
         print('Done!\n')
 
         # split into training data validation data and test data
-        data_train, labels_train, data_validation, labels_validation, data_test, labels_test = []
+        data_train, labels_train, data_validation, labels_validation, data_test, labels_test = [], [], [], [], [], []
         for splitlabel, data, label in zip(splitlabels, datas, labels):
             if splitlabel == 'train':
                 data_train.append(data)

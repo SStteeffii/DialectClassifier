@@ -27,10 +27,12 @@ def read_data_with_labels(filename):
         tsv_reader = csv.reader(infile, delimiter=delimiter_newline)
         for row in tsv_reader:
             for r in row:
-                splitlabel, dialect, datastring = r.split(delimiter_tab)
-                splitlabels.append(splitlabel)
-                labels.append(dialect)
-                data.append(datastring)
+                tab_count = r.count(delimiter_tab)
+                if tab_count >= 2:
+                    splitlabel, dialect, datastring = r.split(delimiter_tab, 2)
+                    splitlabels.append(splitlabel)
+                    labels.append(dialect)
+                    data.append(datastring)
     return splitlabels, data, labels
 
 # print(read_data_with_labels('data_mixed_labeled_preprocessed.tsv'))
