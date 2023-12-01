@@ -3,6 +3,7 @@ import seaborn as sns
 import matplotlib
 from sklearn import svm, datasets
 from joblib import dump, load
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -14,19 +15,18 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 
 def train_random_forest(filename, classifiername):
-
     X_train_tf, X_test_tf, training_label, test_label = load_split_vectorize_data(filename, 'train')
 
     # dimensionality reduction using PCA
     print('Dimensionality reduction...')
-    pca = TruncatedSVD(n_components=128)
+    pca = TruncatedSVD(n_components=128) # je kleiner die Zahl, desto wahrscheinlicher läuft der code
     x_train_tf_pca = pca.fit_transform(X_train_tf, None)
     print('Done!\n')
 
     # Classifier training RandomForest
     print('Classifier training...')
     classifier = RandomForestClassifier(verbose=1)
-    classifier.fit(X_train_tf, np.asarray(training_label))
+    classifier.fit(x_train_tf_pca, np.asarray(training_label))
     print('Done!\n')
 
     # save trained classifier
@@ -37,9 +37,10 @@ def train_random_forest(filename, classifiername):
     dump(clf, classifiername)
     print('Done!\n')
 
+    return pca
 
-def prediction_random_forest(classifiername, filename, data_label):
 
+def prediction_random_forest(classifiername, filename, data_label, pca):
     X_train_tf, X_test_tf, training_label, test_label = load_split_vectorize_data(filename, data_label)
 
     # load saved trained classifier
@@ -47,9 +48,11 @@ def prediction_random_forest(classifiername, filename, data_label):
     clf_loaded = load(classifiername)
     print('Done!\n')
 
+    X_test_tf_pca = pca.transform(X_test_tf)
+
     # predict saved trained classifier with new test data
     print('Prediction...')
-    y_pred = clf_loaded.predict(X_test_tf)
+    y_pred = clf_loaded.predict(X_test_tf_pca)
     print(classification_report(np.asarray(test_label), y_pred))
     with open('./Result_RandomForest/classification_report_RF_' + filename[17:filename.find("_", 18)] + '.tsv', 'a',
               encoding='utf-16') as outfile:
@@ -131,18 +134,14 @@ if __name__ == '__main__':
     classifier_name = 'clf.joblib'
 
     for file in files:
-
         # train classifier with train data
-        train_random_forest(file, classifier_name)
+        pca = train_random_forest(file, classifier_name)
 
         # load trained classifier, test with validation data
-        prediction_random_forest(classifier_name, file, 'validation')
+        prediction_random_forest(classifier_name, file, 'validation', pca)
 
         # load trained classifier, test with test data
-        prediction_random_forest(classifier_name, file, 'test')
+        prediction_random_forest(classifier_name, file, 'test', pca)
 
         # load trained classifier, test with final test data (Tatoeba)
-        prediction_random_forest(classifier_name, file_final_test, 'test')
-
-
-
+        prediction_random_forest(classifier_name, file_final_test, 'test', pca)
