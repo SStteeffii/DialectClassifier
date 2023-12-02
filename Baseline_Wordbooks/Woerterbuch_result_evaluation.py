@@ -3,6 +3,7 @@ import numpy as np
 import seaborn as sns
 import matplotlib
 from sklearn.metrics import confusion_matrix, classification_report
+
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -51,14 +52,14 @@ def result_evaluation():
     cnf_matrix = confusion_matrix(labels_test, labels_predict)
     np.set_printoptions(precision=2, suppress=True, formatter={'float': '{:0.0f}'.format})
     df = pd.DataFrame(cnf_matrix, index=index, columns=index)
-    sns.heatmap(df, annot=True, cmap='Blues', ax=ax, fmt='.2g')
+    sns.heatmap(df, annot=True, cmap='Blues', ax=ax, fmt='d')
 
     # labels, title and ticks
     ax.set_xlabel('Predicted', fontsize=15)
     ax.set_ylabel('True', fontsize=15)
     plt.title('Confusion Matrix - Wörterbuch Tatoeba', fontsize=18)
 
-    filename_conmat = "./Result/ConfustionMatrix-Woerterbuecher-Tatoeba-" + str(count_rows) + ".png"
+    filename_conmat = "./Result/ConfustionMatrix-Woerterbuecher-Wiki-" + str(count_rows) + ".png"
     plt.savefig(str(filename_conmat))
 
     with open('./Result/baseline_result_evaluation.tsv', 'a', encoding='utf-16') as outfile:
@@ -69,4 +70,5 @@ def result_evaluation():
         outfile.write(str(classification_report(np.asarray(labels_test), labels_predict)))
         outfile.write(delimiter_newline)
 
-#  result_evaluation()
+
+result_evaluation()

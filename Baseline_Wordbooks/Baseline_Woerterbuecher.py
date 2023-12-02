@@ -15,6 +15,7 @@ with open('../Delimiters/Delimiter_NewLine.txt', 'r', encoding='utf-8') as file:
 with open('../Delimiters/Delimiter_Tab.txt', 'r', encoding='utf-8') as file:
     delimiter_tab = file.read()
 
+#  with open('../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.tsv', 'r', encoding='utf-16') as infile:
 with open('../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.tsv', 'r', encoding='utf-16') as infile:
     tsv_reader = csv.reader(infile, delimiter=delimiter_newline)
     for row in tsv_reader:
@@ -81,6 +82,8 @@ with open('../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.ts
                 if count % 100 == 0 and count != 0:
                     Woerterbuch_result_evaluation.result_evaluation()
                 count += 1
+
+    Woerterbuch_result_evaluation.result_evaluation()
 
 total_time = time.time() - t0
 with open('./Result/data.tsv', 'a', encoding='utf-16') as tsv_file:
