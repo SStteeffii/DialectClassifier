@@ -71,4 +71,4 @@ def result_evaluation():
         outfile.write(delimiter_newline)
 
 
-result_evaluation()
+#  result_evaluation()

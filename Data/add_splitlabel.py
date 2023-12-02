@@ -10,6 +10,7 @@ files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed.tsv',
          '../Data_Training/MrDialect_de+nds+bar_mixed_preprocessed.tsv',
          '../Data_Training/Wikipedia_de+nds+bar_mixed.tsv']
 # files = ['../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed.tsv'] #  with 100 % "test"
+# files = ['../Data_FinalTest/Wikipedia_de+nds+bar_mixed_forWordbooks.tsv'] #  with 100 % "test"
 
 for file in files:
     count_rows = 0

@@ -16,7 +16,7 @@ with open('../Delimiters/Delimiter_Tab.txt', 'r', encoding='utf-8') as file:
     delimiter_tab = file.read()
 
 #  with open('../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.tsv', 'r', encoding='utf-16') as infile:
-with open('../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.tsv', 'r', encoding='utf-16') as infile:
+with open('../Data_FinalTest/Wikipedia_de+nds+bar_mixed_forWordbooks_splitlabel.tsv', 'r', encoding='utf-16') as infile:
     tsv_reader = csv.reader(infile, delimiter=delimiter_newline)
     for row in tsv_reader:
         for r in row:

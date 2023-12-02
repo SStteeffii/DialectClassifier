@@ -1,10 +1,10 @@
 import random
 import csv
 
-with open('Delimiter_NewLine.txt', 'r', encoding='utf-8') as file:
+with open('../../../Delimiters/Delimiter_NewLine.txt', 'r', encoding='utf-8') as file:
     delimiter_newline = file.read()
 
-with open('Delimiter_Tab.txt', 'r', encoding='utf-8') as file:
+with open('../../../Delimiters/Delimiter_Tab.txt', 'r', encoding='utf-8') as file:
     delimiter_tab = file.read()
 
 files = ['data_bar_cleaned_resized_preprocessed.tsv', 'data_nds_cleaned_resized_preprocessed.tsv', 'data_de_cleaned_resized_preprocessed.tsv']
