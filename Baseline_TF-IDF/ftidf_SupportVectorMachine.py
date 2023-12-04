@@ -27,12 +27,12 @@ if __name__ == '__main__':
         print('Done!\n')
 
         # split into training data validation data and test data
-        data_train, labels_train, data_validation, labels_validation, data_test, labels_test = []
+        data_train, labels_train, data_validation, labels_validation, data_test, labels_test = [], [], [], [], [], []
         for splitlabel, data, label in zip(splitlabels, datas, labels):
             if splitlabel == 'train':
                 data_train.append(data)
                 labels_train.append(label)
-            elif splitlabel == 'validation':
+            elif splitlabel == 'validate':
                 data_validation.append(data)
                 labels_validation.append(label)
             elif splitlabel == 'test':
@@ -47,17 +47,16 @@ if __name__ == '__main__':
         print('Done!\n')
 
         # dimensionality reduction using PCA
-        print('Dimensionality reduction...')
-        pca = TruncatedSVD(n_components=128)
-        X_train_tf_pca = pca.fit_transform(X_train_tf, None)
-        print('Done!\n')
+        #print('Dimensionality reduction...')
+        #pca = TruncatedSVD(n_components=128)
+        #X_train_tf_pca = pca.fit_transform(X_train_tf, None)
+        #print('Done!\n')
 
         # Classifier training Gradient Boosting Classifier
         print('Classifier training...')
         classifier = LinearSVC()
-        print('Done!\n')
-
         classifier.fit(X_train_tf, np.asarray(labels_train))
+        print('Done!\n')
 
         # predict test data
         y_pred = classifier.predict(X_test_tf)

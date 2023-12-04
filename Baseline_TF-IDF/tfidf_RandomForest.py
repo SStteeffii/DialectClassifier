@@ -3,7 +3,6 @@ import seaborn as sns
 import matplotlib
 from sklearn import svm, datasets
 from joblib import dump, load
-
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -15,11 +14,12 @@ from sklearn.metrics import confusion_matrix, classification_report
 
 
 def train_random_forest(filename, classifiername):
+
     X_train_tf, X_test_tf, training_label, test_label = load_split_vectorize_data(filename, 'train')
 
     # dimensionality reduction using PCA
     print('Dimensionality reduction...')
-    pca = TruncatedSVD(n_components=128) # je kleiner die Zahl, desto wahrscheinlicher läuft der code
+    pca = TruncatedSVD(n_components=128)
     x_train_tf_pca = pca.fit_transform(X_train_tf, None)
     print('Done!\n')
 
@@ -31,10 +31,7 @@ def train_random_forest(filename, classifiername):
 
     # save trained classifier
     print('Save Classifier...')
-    clf = svm.SVC()
-    X, y = datasets.load_iris(return_X_y=True)
-    clf.fit(X, y)
-    dump(clf, classifiername)
+    dump(classifier, classifiername)
     print('Done!\n')
 
     return pca
@@ -45,14 +42,14 @@ def prediction_random_forest(classifiername, filename, data_label, pca):
 
     # load saved trained classifier
     print('Load Classifier...')
-    clf_loaded = load(classifiername)
+    model_loaded = load(classifiername)
     print('Done!\n')
 
     X_test_tf_pca = pca.transform(X_test_tf)
 
     # predict saved trained classifier with new test data
     print('Prediction...')
-    y_pred = clf_loaded.predict(X_test_tf_pca)
+    y_pred = model_loaded.predict(X_test_tf_pca)
     print(classification_report(np.asarray(test_label), y_pred))
     with open('./Result_RandomForest/classification_report_RF_' + filename[17:filename.find("_", 18)] + '.tsv', 'a',
               encoding='utf-16') as outfile:
@@ -83,7 +80,7 @@ def load_split_vectorize_data(filename, data_label):
     training_label, training_data, test_label, test_data, split_label = [], [], [], [], []
     for split_label, data, label in zip(splitlabels, datas, labels):
         if split_label == data_label:
-            if data_label == 'validation' or data_label == 'test':
+            if data_label == 'validate' or data_label == 'test':
                 test_data.append(data)
                 test_label.append(label)
         if data_label == 'train':
@@ -96,7 +93,7 @@ def load_split_vectorize_data(filename, data_label):
     tf_idf = TfidfVectorizer()
     X_train_tf = tf_idf.fit_transform(training_data)
     X_test_tf = []
-    if data_label == 'validation' or data_label == 'test':
+    if data_label == 'validate' or data_label == 'test':
         X_test_tf = tf_idf.transform(test_data)
     print('Done!\n')
 
@@ -128,17 +125,20 @@ if __name__ == '__main__':
     files = ['../Data_Training/Dialektversum_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
              '../Data_Training/MrDialect_de+nds+bar_mixed_preprocessed_splitlabel.tsv',
              '../Data_Training/Wikipedia_de+nds+bar_mixed_splitlabel.tsv']
+    #files = ['../Data_Training/Wikipedia_de+nds+bar_mixed_splitlabel-half.tsv']
+    #files = ['../Data_Training/Wikipedia_de+nds+bar_mixed_splitlabel-quater.tsv']
 
     file_final_test = '../Data_FinalTest/Tatoeba_de+nds+bar_mixed_preprocessed_splitlabel.tsv'
 
     classifier_name = 'clf.joblib'
 
     for file in files:
+
         # train classifier with train data
         pca = train_random_forest(file, classifier_name)
 
         # load trained classifier, test with validation data
-        prediction_random_forest(classifier_name, file, 'validation', pca)
+        prediction_random_forest(classifier_name, file, 'validate', pca)
 
         # load trained classifier, test with test data
         prediction_random_forest(classifier_name, file, 'test', pca)
