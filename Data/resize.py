@@ -31,7 +31,7 @@ path_Dialektversum = "C:/Users/Stefa/OneDrive/Dokumente/Bachelorarbeit_Shared/Da
 files_Dialektversum = [[str(path_Dialektversum + 'bar_Dialektversum-RespektEmpire.tsv')], [str(path_Dialektversum + 'nds_Dialektversum-Oeverstetter.tsv')], [str(path_Dialektversum + 'de_Wiki_cleaned_resized_NewLine.tsv')]]
 
 
-target_size = 230  # size of the data set per dialect
+target_size = 1000  # size of the data set per dialect
 
 # create folders:
 if not os.path.exists(str(target_size)):
@@ -57,7 +57,7 @@ wikipedia_filenames_preprocessed = wikipedia_preprocess.preprocess(wikipedia_fil
 tatoeba_mix = load_module("mix", "Real_Data/Tatoeba/3-Tatoeba_mix_data_randomly.py")
 tatoeba_mix.mix(tatoeba_filenames_resized, str(str(target_size) + '/Tatoeba_de+nds+bar_mixed.tsv'))
 tatoeba_mix.mix(wikipedia_filenames_preprocessed, str(str(target_size) + '/Wikipedia_de+nds+bar_mixed.tsv'))
-tatoeba_mix.mix(wikipedia_filenames_preprocessed, str('230_final/' + str(target_size) + '_Wikipedia.tsv'))
+tatoeba_mix.mix(wikipedia_filenames_preprocessed, str(str(target_size) + '_final/' + str(target_size) + '_Wikipedia.tsv'))
 
 # mix and label data:
 dialektversum_mix = load_module("mix", "Translated_Data/Dialektversum/3-Dialektversum-bar+nds_label+mix_data_randomly.py")
@@ -68,13 +68,13 @@ dialektversum_mix.mix(mrDialect_filenames_resized, str(str(target_size) + '/MrDi
 tatoeba_preprocess = load_module("preprocess", "Real_Data/Tatoeba/4-Tatoeba_preprocess.py")
 # tatoeba
 tatoeba_preprocess.preprocess(str(str(target_size) + '/Tatoeba_de+nds+bar_mixed.tsv'), str(str(target_size) + '/Tatoeba_de+nds+bar_mixed.tsv')[:-4] + '_preprocessed.tsv')
-tatoeba_preprocess.preprocess(str(str(target_size) + '/Tatoeba_de+nds+bar_mixed.tsv'), str('230_final/' + str(target_size) + '_Tatoeba.tsv'))
+tatoeba_preprocess.preprocess(str(str(target_size) + '/Tatoeba_de+nds+bar_mixed.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_Tatoeba.tsv'))
 # dialektversum
 tatoeba_preprocess.preprocess(str(str(target_size) + '/Dialektversum_de+nds+bar_mixed.tsv'), str(str(target_size) + '/Dialektversum_de+nds+bar_mixed.tsv')[:-4] + '_preprocessed.tsv')
-tatoeba_preprocess.preprocess(str(str(target_size) + '/Dialektversum_de+nds+bar_mixed.tsv'), str('230_final/' + str(target_size) + '_Dialektversum.tsv'))
+tatoeba_preprocess.preprocess(str(str(target_size) + '/Dialektversum_de+nds+bar_mixed.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_Dialektversum.tsv'))
 # mrdialect
 tatoeba_preprocess.preprocess(str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv'), str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv')[:-4] + '_preprocessed.tsv')
-tatoeba_preprocess.preprocess(str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv'), str('230_final/' + str(target_size) + '_MrDialect.tsv'))
+tatoeba_preprocess.preprocess(str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_MrDialect.tsv'))
 
 
 
