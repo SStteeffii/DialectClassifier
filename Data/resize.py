@@ -33,7 +33,7 @@ path_Dialektversum = "C:/Users/Stefa/OneDrive/Dokumente/Bachelorarbeit_Shared/Da
 files_Dialektversum = [[str(path_Dialektversum + 'bar_Dialektversum-RespektEmpire.tsv')], [str(path_Dialektversum + 'nds_Dialektversum-Oeverstetter.tsv')], [str(path_Dialektversum + 'de_Wiki_cleaned_resized_NewLine.tsv')]]
 
 
-target_size = 250  # size of the data set per dialect
+target_size = 230  # size of the data set per dialect
 
 # create folders:
 if not os.path.exists(str(target_size)):
