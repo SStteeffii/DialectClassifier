@@ -2,6 +2,8 @@ import importlib.util
 import os
 import sys
 
+import add_splitlabel
+
 
 # import methods
 def load_module(module_name, file_path):
@@ -31,7 +33,7 @@ path_Dialektversum = "C:/Users/Stefa/OneDrive/Dokumente/Bachelorarbeit_Shared/Da
 files_Dialektversum = [[str(path_Dialektversum + 'bar_Dialektversum-RespektEmpire.tsv')], [str(path_Dialektversum + 'nds_Dialektversum-Oeverstetter.tsv')], [str(path_Dialektversum + 'de_Wiki_cleaned_resized_NewLine.tsv')]]
 
 
-target_size = 1000  # size of the data set per dialect
+target_size = 250  # size of the data set per dialect
 
 # create folders:
 if not os.path.exists(str(target_size)):
@@ -76,5 +78,7 @@ tatoeba_preprocess.preprocess(str(str(target_size) + '/Dialektversum_de+nds+bar_
 tatoeba_preprocess.preprocess(str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv'), str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv')[:-4] + '_preprocessed.tsv')
 tatoeba_preprocess.preprocess(str(str(target_size) + '/MrDialect_de+nds+bar_mixed.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_MrDialect.tsv'))
 
-
+# add split label
+files = [str(str(target_size) + '_final/' + str(target_size) + '_MrDialect.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_Dialektversum.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_Tatoeba.tsv'), str(str(target_size) + '_final/' + str(target_size) + '_Wikipedia.tsv')]
+add_splitlabel.splitlabel(files)
 
