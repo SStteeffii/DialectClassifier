@@ -5,6 +5,7 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 sns.set_theme()
 
+# macro: Precision, Recall and F1-Score for one training file and one test file
 
 def read_classification_report(data_path: str) -> dict:
     df = pd.read_csv(data_path, sep='\t', encoding='utf-16')
@@ -117,7 +118,7 @@ if __name__ == '__main__':
 
     plt.title(str('Metrik Vergleich für Macro Average für verschiedene Sample-Größen für die Trainingsdaten ' + base_path[base_path.rfind('/')+1:] + ' und den Testdaten ' + report_name[:-4]))
     plt.xlabel('Samples')
-    plt.ylabel('Metrics')
+    plt.ylabel('Score')
     plt.legend(loc='right')
 
     # Extrahieren und Anpassen der Daten für die Tabelle

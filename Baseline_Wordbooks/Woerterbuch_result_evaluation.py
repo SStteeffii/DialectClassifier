@@ -23,7 +23,7 @@ def result_evaluation():
     labels_test = []
     labels_predict = []
 
-    with open('./Result/data_baseline_result.tsv', 'r', encoding='utf-16') as infile:
+    with open('./Result_Wikipedia/data_baseline_result.tsv', 'r', encoding='utf-16') as infile:
         tsv_reader = csv.reader(infile, delimiter=delimiter_newline)
         for row in tsv_reader:
             count_rows += 1
@@ -33,6 +33,8 @@ def result_evaluation():
                     true_count += 1
                 if match == "False":
                     false_count += 1
+                    if woerterbuch_result != "de" or woerterbuch_result != "nds" or woerterbuch_result != "bar":
+                        print(r)
                 if woerterbuch_result == "none":
                     none_count += 1
                 if woerterbuch_result == "de" or woerterbuch_result == "nds" or woerterbuch_result == "bar":
@@ -57,12 +59,12 @@ def result_evaluation():
     # labels, title and ticks
     ax.set_xlabel('Predicted', fontsize=15)
     ax.set_ylabel('True', fontsize=15)
-    plt.title('Confusion Matrix - Wörterbuch Tatoeba', fontsize=18)
+    plt.title('Confusion Matrix - Wörterbuch Wikipedia', fontsize=18)
 
-    filename_conmat = "./Result/ConfustionMatrix-Woerterbuecher-Wiki-" + str(count_rows) + ".png"
+    filename_conmat = "./Result_Wikipedia/ConfustionMatrix-Woerterbuecher-Wiki-new-" + str(count_rows) + ".png"
     plt.savefig(str(filename_conmat))
 
-    with open('./Result/baseline_result_evaluation.tsv', 'a', encoding='utf-16') as outfile:
+    with open('./Result_Wikipedia/baseline_result_evaluation_new.tsv', 'a', encoding='utf-16') as outfile:
         outfile.write(str(round((true_count / count_rows) * 100, 2)) + "%, total rows: " + str(
             count_rows) + ", false and none rows: " + str(none_count) + ", false rows: " + str(
             false_count) + ", true rows: " + str(true_count))
@@ -71,4 +73,4 @@ def result_evaluation():
         outfile.write(delimiter_newline)
 
 
-#  result_evaluation()
+result_evaluation()
